@@ -13,18 +13,20 @@ namespace CollectionsMasterConsoleUI
 
             #region Arrays
             //TODO: Create an integer Array of size 50
-            
+            int[] numbers = new int[50];
 
             //TODO: Create a method to populate the number array with 50 random numbers that are between 0 and 50
-            
+            Populater(numbers);
 
             //TODO: Print the first number of the array
+            Console.WriteLine($"{numbers[0]}");
 
-            //TODO: Print the last number of the array            
+            //TODO: Print the last number of the array
+            Console.WriteLine($"{numbers[numbers.Length -1]}");
 
             Console.WriteLine("All Numbers Original");
             //UNCOMMENT this method to print out your numbers from arrays or lists
-            //NumberPrinter();
+            NumberPrinter(numbers);
             Console.WriteLine("-------------------");
 
             //TODO: Reverse the contents of the array and then print the array out to the console.
@@ -37,11 +39,14 @@ namespace CollectionsMasterConsoleUI
 
             Console.WriteLine("---------REVERSE CUSTOM------------");
 
+            ReverseArray(numbers); 
+
             Console.WriteLine("-------------------");
 
             //TODO: Create a method that will set numbers that are a multiple of 3 to zero then print to the console all numbers
             Console.WriteLine("Multiple of three = 0: ");
-            
+
+            ThreeKiller(numbers);            
 
             Console.WriteLine("-------------------");
 
@@ -50,6 +55,9 @@ namespace CollectionsMasterConsoleUI
             Console.WriteLine("Sorted numbers:");
             
 
+            Array.Sort(numbers);
+            NumberPrinter(numbers);
+                
             Console.WriteLine("\n************End Arrays*************** \n");
             #endregion
 
@@ -58,45 +66,64 @@ namespace CollectionsMasterConsoleUI
 
             /*   Set Up   */
             //TODO: Create an integer List
-            
+            var numbList = new List<int>();
 
             //TODO: Print the capacity of the list to the console
-            
+            Console.WriteLine($"Capacity: {numbList.Count}");
+            Console.WriteLine();
 
             //TODO: Populate the List with 50 random numbers between 0 and 50 you will need a method for this            
-            
+            Populater(numbList);
 
             //TODO: Print the new capacity
+            Console.WriteLine();
+            Console.WriteLine($"New Capacity: {numbList.Count}");
             
 
             Console.WriteLine("---------------------");
 
             //TODO: Create a method that prints if a user number is present in the list
             //Remember: What if the user types "abc" accident your app should handle that!
-            Console.WriteLine("What number will you search for in the number list?");
+
+            int userNumber;
+            bool itsANumber;
+
+            do
+            {
+                Console.WriteLine("What number will you search for in the number list?");
+                itsANumber = int.TryParse(Console.ReadLine(), out userNumber);
+
+            } while (itsANumber == false);
+
+            NumberChecker(numbList, userNumber);
             
             Console.WriteLine("-------------------");
 
             Console.WriteLine("All Numbers:");
             //UNCOMMENT this method to print out your numbers from arrays or lists
-            //NumberPrinter();
+            NumberPrinter(numbList);
             Console.WriteLine("-------------------");
 
 
             //TODO: Create a method that will remove all odd numbers from the list then print results
             Console.WriteLine("Evens Only!!");
+
+            OddKiller(numbList);
             
             Console.WriteLine("------------------");
 
             //TODO: Sort the list then print results
             Console.WriteLine("Sorted Evens!!");
+            numbList.Sort();
+            NumberPrinter(numbList);
             
             Console.WriteLine("------------------");
-
             //TODO: Convert the list to an array and store that into a variable
-            
+            var myArray = numbList.ToArray();
+
 
             //TODO: Clear the list
+            numbList.Clear();
             
 
             #endregion
@@ -104,34 +131,79 @@ namespace CollectionsMasterConsoleUI
 
         private static void ThreeKiller(int[] numbers)
         {
-            
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 3 == 0)
+                {
+                    numbers[i] = 0;
+                }
+                
+            }
+            NumberPrinter(numbers);
         }
 
         private static void OddKiller(List<int> numberList)
         {
-            
+            for (int i = numberList.Count -1; i >= 0; i--)
+            {
+                int num = numberList[i];
+                if (numberList[i] % 2 != 0 )
+                { 
+                    numberList.Remove(numberList[i]);
+                }
+            }
+            NumberPrinter(numberList);
+
         }
 
         private static void NumberChecker(List<int> numberList, int searchNumber)
         {
             
+
+            if (numberList.Contains(searchNumber))
+            {
+                Console.WriteLine($"{searchNumber} is in the list");
+            }
+            else
+            {
+                Console.WriteLine("This number is not in the list :(");
+            }
+
         }
 
         private static void Populater(List<int> numberList)
         {
-            Random rng = new Random();
 
+            while (numberList.Count < 51)
+            {
+                Random rng = new Random();
+                var number = rng.Next(0, 50);
+
+                numberList.Add(number);
+            }
+
+            NumberPrinter(numberList);
         }
 
         private static void Populater(int[] numbers)
+
+        //TODO: Create a method to populate the number array with
+        //50 random numbers that are between 0 and 50
+        
         {
-            Random rng = new Random();
+            for (int i = 0; i < numbers.Length; i++)
+            {
+               Random rng = new Random();
+               numbers[i] = rng.Next(0, 50);
+            }
 
         }        
 
         private static void ReverseArray(int[] array)
         {
-            
+            Array.Reverse(array);
+
+            NumberPrinter(array);
         }
 
         /// <summary>
